@@ -13,8 +13,6 @@ spring:
     joda-date-time-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
-
-
 server:
   port: 8004    # 端口号
 
@@ -43,7 +41,6 @@ eureka:
     eurekaServerConnectTimeoutSeconds: 60
     eurekaServerReadTimeoutSeconds: 60
     # 健康检测问题 https://my.oschina.net/andChow/blog/1939238
-
 
 zuul:
   # routes其实zuul已经实现了反向代理和负载均衡的两个功能了，可能有人这时候就纳闷了，这里不是只是反向代理了吗？
@@ -87,3 +84,17 @@ zuul:
   #ribbonIsolationStrategy: THREAD #设置Hystrix隔离策略为线程池
   #threadPool:
    # useSeparateThreadPools: true #每个路由使用独立的线程池
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+security:
+  oauth2:
+    resource:
+      ####从认证授权中心上验证token
+      tokenInfoUri: http://localhost:8005/oauth/check_token
+      preferTokenInfo: true
+    client:
+      accessTokenUri: http://localhost:8005/oauth/token
+      userAuthorizationUri: http://localhost:8005/oauth/authorize

@@ -22,6 +22,7 @@
         <module>order_service</module>
         <module>smt_service</module>
         <module>zuul</module>
+        <module>oauth2_service</module>
     </modules>
 
 
