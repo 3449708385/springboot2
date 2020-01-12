@@ -4,8 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
+    <groupId>com.mgp</groupId>
     <artifactId>smt_service</artifactId>
-    <version>1.0</version>
+    <version>1.0.0</version>
     <name>smt</name>
 
     <parent>
@@ -26,14 +27,15 @@
         <dependency>
             <groupId>com.mgp</groupId>
             <artifactId>api</artifactId>
-            <version>1.0</version>
+            <version>1.0.0</version>
         </dependency>
         <!-- 依赖的commons -->
         <dependency>
             <groupId>com.mgp</groupId>
             <artifactId>common</artifactId>
-            <version>1.0</version>
+            <version>1.0.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -65,11 +67,22 @@
             <artifactId>hystrix-javanica</artifactId>
         </dependency>
         <!-- spring cloud 负载均衡访问 final -->
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>RELEASE</version>
+        </dependency>
+        <!--SpringBoot swagger2 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+        <!--SpringBoot swagger2 -UI -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.8.0</version>
         </dependency>
 
     </dependencies>
@@ -90,8 +103,12 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

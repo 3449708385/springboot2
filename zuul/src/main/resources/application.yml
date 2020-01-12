@@ -1,0 +1,89 @@
+spring:
+  application:
+    name: zuul #服务名称
+  cloud:
+    # 设置偏好网段
+    inetutils:
+      preferred-networks: 127.0.0.
+    loadbalancer:
+      retry:
+        enabled: true
+  jackson:
+    date-format: yyyy-MM-dd
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+
+
+server:
+  port: 8004    # 端口号
+
+eureka:
+  server:
+    # 测试时关闭自我保护机制，保证不可用服务及时踢出
+    enable-self-preservation: true
+    eviction-interval-timer-in-ms: 60000  #清理间隔（毫秒）
+    #peerNodeReadTimeoutMs: 200000
+    #peerNodeConnectTimeoutMs: 60000
+    #https://blog.csdn.net/qq_26440803/article/details/83113037
+  instance:
+    hostname: 127.0.0.1
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port} #指定实例id
+    lease-expiration-duration-in-seconds: 30   #续约更新时间间隔
+    lease-renewal-interval-in-seconds: 10     #续约到期时间间隔，默认90
+  client:
+    registerWithEureka: true  #是否注册自己到eureka服务中，默认不注册
+    fetchRegistry: true     #是否从eureka服务中获取注册信息
+    serviceUrl:
+      # 服务器注册/获取服务器的zone
+      #自己注册到eureka那个服务,可注册多个，用，分隔
+      defaultZone: http://${eureka.instance.hostname}:8001/eureka/
+    eurekaServerConnectTimeoutSeconds: 60
+    eurekaServerReadTimeoutSeconds: 60
+    # 健康检测问题 https://my.oschina.net/andChow/blog/1939238
+
+
+zuul:
+  # routes其实zuul已经实现了反向代理和负载均衡的两个功能了，可能有人这时候就纳闷了，这里不是只是反向代理了吗？
+  # 怎么实现负载均衡呢？其实zuul实现负载均衡很简单，使用serviceId进行绑定后，如果有多个相同的serviceid，则会进行轮询的方式进行访问。这个在下文会有具体的结果截图。
+  # https://blog.csdn.net/linzhiqiang0316/article/details/85558106
+  routes:
+    order_service: #用户测试服务，名称随意
+      path: /order/**  #请求过滤规则,这里可以是任意名称，url包含就行，包含跳转到serviceId配置的服务中请求
+      #这个只代表项目的名字，如果项目没有名字：http://localhost:9001/customer/test
+      serviceId: order
+      #url:   #真正的微服务地址
+    smt_service: #服务名称随意
+      path: /smt/**  #请求过滤规则,这里可以是任意名称，url包含就行，包含跳转到serviceId配置的服务中请求
+      #这个只代表项目的名字，如果项目没有名字：http://localhost:9001/config/config/getConfig
+      serviceId: smt
+      #url:   #真正的微服务地址
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+  add-host-header: true
+  sensitive-headers: Access-Control-Allow-Origin,Access-Control-Allow-Methods
+  strip-prefix: true
+  ratelimit:
+    # 开启限流
+    enabled: true
+    # 存储方式
+    repository: REDIS
+    # 限流策略
+    policies:
+      # 指定限流服务
+      test-service:
+        # 每个周期内请求次数
+        limit: 3000
+        # 单位时间内允许访问的总时间
+        quota: 30
+        # 周期时间
+        refresh-interval: 30
+        # 限流方式 USER 根据用户；ORIGIN 原始请求；URL 请求地址；
+        type: ORIGIN
+  #Turbine 配置
+  #ribbonIsolationStrategy: THREAD #设置Hystrix隔离策略为线程池
+  #threadPool:
+   # useSeparateThreadPools: true #每个路由使用独立的线程池
