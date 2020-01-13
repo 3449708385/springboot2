@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -47,18 +48,32 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
-		clients.jdbc(dataSource).withClient("admin").secret(new BCryptPasswordEncoder().encode("admin"))
+
+		/**code认证：
+		 * 1.获取code,浏览器访问http://localhost:8005/oauth/authorize?response_type=code&client_id=client_1&redirect_uri=http://www.mayikt.com，通过user_1,123456登陆
+		 * 然后返回code码
+		 * 2.获取access_token,浏览器访问http://localhost:8005/oauth/token?grant_type=authorization_code&code=WTzUIs&redirect_uri=http://www.mayikt.com&scope=all，通过client_1,client_1登陆
+		 * password认证
+		 * 1.post获取access_token:http://localhost:8005/oauth/token?grant_type=password&username=user_1&password=123456&client_id=client_1&client_secret=client_1&scope=all
+		 * get检查access_token:http://localhost:8005/oauth/check_token?token=460a6f30-630f-481f-98a9-5036309d8a45
+		 * post刷新access_token:http://localhost:8005/oauth/token?grant_type=refresh_token&refresh_token=be0fdc06-84bb-4273-9534-a3a68dde62d5&client_id=client_1&client_secret=client_1
+		 */
+		clients.jdbc(dataSource);
+		/*clients.jdbc(dataSource).withClient("client_1").secret(new BCryptPasswordEncoder().encode("client_1"))
 				.authorizedGrantTypes("password", "refresh_token", "authorization_code")
 				.redirectUris("http://www.mayikt.com").authorities("ROLE_ADMIN", "ROLE_USER")
-				.scopes("all").accessTokenValiditySeconds(7200).refreshTokenValiditySeconds(7200);
+				.scopes("all").accessTokenValiditySeconds(7200).refreshTokenValiditySeconds(7200);*/
 	}
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
+		//允许post和get请求
+		endpoints.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
 		endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager)
 				.userDetailsService(userDetailsService());
 	}
 
+	//真实环境读取数据库全部数据，注入到userDetailsService
 	@Bean
 	UserDetailsService userDetailsService() {
 		InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
@@ -73,6 +88,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
 		security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()")
 				.allowFormAuthenticationForClients();
+		//check token 允许
+		security.checkTokenAccess("permitAll()");
 
 	}
 
