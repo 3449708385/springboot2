@@ -73,7 +73,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 				.userDetailsService(userDetailsService());
 	}
 
-	//真实环境读取数据库全部数据，注入到userDetailsService
+	//真实环境注释掉这里，读取数据库全部数据，注入到userDetailsService，操作重写userDetailsService，根据用户名读取数据库数据，然后注入到endpoints
 	@Bean
 	UserDetailsService userDetailsService() {
 		InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
