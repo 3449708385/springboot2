@@ -23,6 +23,7 @@
         <module>smt_service</module>
         <module>zuul</module>
         <module>oauth2_service</module>
+        <module>oauth2_api</module>
     </modules>
 
 
