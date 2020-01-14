@@ -16,6 +16,10 @@ public class SmtServiceImpl implements SmtService {
     @Autowired
     private SmtMapper smtMapper;
 
+    /**
+     * 采取的是先提交后根据分支事务，删除数据的方式，自增id不会回退。
+     */
+
     @Override
     @GlobalTransactional(name = "addSmt-order",rollbackFor = Exception.class)
     public void addSmt() {
