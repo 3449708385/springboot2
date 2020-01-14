@@ -24,6 +24,8 @@
         <module>zuul</module>
         <module>oauth2_service</module>
         <module>oauth2_api</module>
+        <module>seata_smt_service</module>
+        <module>seata_order_service</module>
     </modules>
 
 
