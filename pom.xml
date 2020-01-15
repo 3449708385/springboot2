@@ -26,6 +26,7 @@
         <module>oauth2_api</module>
         <module>seata_smt_service</module>
         <module>seata_order_service</module>
+        <module>shardingjdbc</module>
     </modules>
 
 
