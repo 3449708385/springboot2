@@ -3,6 +3,8 @@ package com.mgp.shardingjdbc.dao;
 import com.mgp.bean.OrderShardingJDBC;
 import com.mgp.bean.OrderShardingJDBCExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 public interface OrderShardingJDBCMapper {

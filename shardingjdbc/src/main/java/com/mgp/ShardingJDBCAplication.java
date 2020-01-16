@@ -1,4 +1,4 @@
-package com.mgp.shardingjdbc;
+package com.mgp;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

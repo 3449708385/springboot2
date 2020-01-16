@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mgp.shardingjdbc.dao.OrderShardingJDBCMapper" >
-  <resultMap id="BaseResultMap" type="com.mgp.bean.OrderShardingJDBC" >
+<mapper namespace="com.mgp.shardingjdbc.dao.SmtShardingJDBCMapper" >
+  <resultMap id="BaseResultMap" type="com.mgp.bean.SmtShardingJDBC" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="smt_id" property="smtId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -64,16 +64,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, order_id
+    id, smt_id
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mgp.bean.OrderShardingJDBCExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.mgp.bean.SmtShardingJDBCExample" >
     select
     <if test="distinct" >
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from t_order
+    from t_smt
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -84,56 +84,56 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from t_order
+    from t_smt
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from t_order
+    delete from t_smt
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.mgp.bean.OrderShardingJDBCExample" >
-    delete from t_order
+  <delete id="deleteByExample" parameterType="com.mgp.bean.SmtShardingJDBCExample" >
+    delete from t_smt
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.mgp.bean.OrderShardingJDBC" >
-    insert into t_order (id, order_id)
-    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=INTEGER})
+  <insert id="insert" parameterType="com.mgp.bean.SmtShardingJDBC" >
+    insert into t_smt (id, smt_id)
+    values (#{id,jdbcType=BIGINT}, #{smtId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.mgp.bean.OrderShardingJDBC" >
-    insert into t_order
+  <insert id="insertSelective" parameterType="com.mgp.bean.SmtShardingJDBC" >
+    insert into t_smt
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="orderId != null" >
-        order_id,
+      <if test="smtId != null" >
+        smt_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="orderId != null" >
-        #{orderId,jdbcType=INTEGER},
+      <if test="smtId != null" >
+        #{smtId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.mgp.bean.OrderShardingJDBCExample" resultType="java.lang.Integer" >
-    select count(*) from t_order
+  <select id="countByExample" parameterType="com.mgp.bean.SmtShardingJDBCExample" resultType="java.lang.Integer" >
+    select count(*) from t_smt
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update t_order
+    update t_smt
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.orderId != null" >
-        order_id = #{record.orderId,jdbcType=INTEGER},
+      <if test="record.smtId != null" >
+        smt_id = #{record.smtId,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -141,25 +141,25 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update t_order
+    update t_smt
     set id = #{record.id,jdbcType=BIGINT},
-      order_id = #{record.orderId,jdbcType=INTEGER}
+      smt_id = #{record.smtId,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.mgp.bean.OrderShardingJDBC" >
-    update t_order
+  <update id="updateByPrimaryKeySelective" parameterType="com.mgp.bean.SmtShardingJDBC" >
+    update t_smt
     <set >
-      <if test="orderId != null" >
-        order_id = #{orderId,jdbcType=INTEGER},
+      <if test="smtId != null" >
+        smt_id = #{smtId,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.mgp.bean.OrderShardingJDBC" >
-    update t_order
-    set order_id = #{orderId,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.mgp.bean.SmtShardingJDBC" >
+    update t_smt
+    set smt_id = #{smtId,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

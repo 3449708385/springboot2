@@ -81,20 +81,11 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <!-- 引入shardingjdbc依赖信息 -->
+        <!-- 引入shardingjdbc依赖信息,这个版本启动的时候会强制扫描分片表，3.1会导致查询单表分片失败不建议升级 -->
         <dependency>
-            <groupId>io.shardingjdbc</groupId>
-            <artifactId>sharding-jdbc-core</artifactId>
-            <version>2.0.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dangdang</groupId>
-            <artifactId>sharding-jdbc-self-id-generator</artifactId>
-            <version>1.4.2</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
+            <groupId>io.shardingsphere</groupId>
+            <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+            <version>3.0.0.M3</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
