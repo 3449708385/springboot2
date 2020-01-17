@@ -2,9 +2,15 @@
 <!DOCTYPE mycat:schema SYSTEM "schema.dtd">
 <mycat:schema xmlns:mycat="http://io.mycat/">
     <!-- TESTDB1 是mycat的逻辑库名称，链接需要用的 -->
-    <schema name="mycat_testdb" checkSQLschema="false" sqlMaxLimit="100" dataNode="dn1"></schema>
+    <schema name="mycat_testdb" checkSQLschema="false" sqlMaxLimit="100" dataNode="dn1">
+	 
+	  <table name="order_info"  dataNode="dn1,dn2,dn3" rule="role2" /> 
+	
+	</schema>
         <!-- database 是MySQL数据库的库名 -->
-    <dataNode name="dn1" dataHost="localhost1" database="mysqlCopy" />
+    <dataNode name="dn1" dataHost="localhost1" database="user_db1" />
+	<dataNode name="dn2" dataHost="localhost1" database="user_db2" />
+	<dataNode name="dn3" dataHost="localhost1" database="user_db3" />
     <!--
     dataNode节点中各属性说明：
     name：指定逻辑数据节点名称；
@@ -28,9 +34,9 @@
     <dataHost name="localhost1" maxCon="1000" minCon="10" balance="3" writeType="0" dbType="mysql" dbDriver="native" switchType="1"  slaveThreshold="100">
         <heartbeat>select user()</heartbeat>
         <!-- 可以配置多个主从 -->
-        <writeHost host="hostM1" url="192.168.1.3:3306" user="root" password="root">
+        <writeHost host="hostM1" url="192.168.212.202:3306" user="root" password="root">
             <!-- 可以配置多个从库 -->
-            <readHost host="hostS2" url="192.168.1.4:3306" user="root" password="root" />
+            <readHost host="hostS2" url="192.168.212.203:3306" user="root" password="root" />
         </writeHost>
     </dataHost>
 </mycat:schema>
