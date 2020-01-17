@@ -27,6 +27,7 @@
         <module>seata_smt_service</module>
         <module>seata_order_service</module>
         <module>shardingjdbc</module>
+        <module>mycat</module>
     </modules>
 
 
