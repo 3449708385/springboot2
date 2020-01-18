@@ -1,0 +1,14 @@
+server:
+  port: 8022
+###dubbo 注册服务名称
+dubbo:
+  application:
+    name: smt
+ ###dubbo服务地址
+  #protocol:
+    #name: dubbo
+    #port: 20880
+  registry:
+    address: zookeeper://192.168.1.4:2181
+  consumer:
+    timeout: 5000

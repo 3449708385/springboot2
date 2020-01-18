@@ -1,0 +1,12 @@
+server:
+  port: 8021
+dubbo:
+  application:
+    name: order
+  #protocol:
+    #name: dubbo
+    #port: 20880
+  registry:
+    address: zookeeper://192.168.1.4:2181
+  scan:
+    base-packages: com.mgp.*.service

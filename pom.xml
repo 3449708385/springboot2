@@ -28,6 +28,9 @@
         <module>seata_order_service</module>
         <module>shardingjdbc</module>
         <module>mycat</module>
+        <module>duboo_smt_service</module>
+        <module>duboo_order_service</module>
+        <module>dubboapi</module>
     </modules>
 
 
