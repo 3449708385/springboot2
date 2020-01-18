@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Primary
 public class DynamicDataSource extends AbstractRoutingDataSource {
+
 	@Autowired
 	@Qualifier("selectDataSource")
 	private DataSource selectDataSource;
